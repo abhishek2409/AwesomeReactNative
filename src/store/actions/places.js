@@ -11,14 +11,3 @@ export const deletePlace = ()=> {
     type:actions.DELETE_PLACE
   }
 }
-export const selectPlace = (placekey)=> {
-  return {
-    type:actions.SELECT_PLACE,
-    placekey
-  }
-}
-export const deselectPlace = ()=> {
-  return {
-    type:actions.DESELECT_PLACE
-  }
-}
