@@ -5,10 +5,24 @@ import PlaceList from '../../components/PlaceList/PlaceList';
 
 class FindPlaceScreen extends Component {
 
+  selectHandler = key =>{
+    const selPlace = this.props.places.find(place=>{
+      return place.key === key
+    });
+
+    this.props.navigator.push({
+      screen:"awesome-reactnative.PlaceDetailScreen",
+      title:selPlace.text,
+      passProps: {
+        selected:selPlace
+      }
+    })
+  }
+
   render(){
     return(
       <View>
-        <PlaceList places={this.props.places}/>
+        <PlaceList places={this.props.places} onItemSelected={this.selectHandler}/>
       </View>
     )
   }
