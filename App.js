@@ -85,6 +85,7 @@ import AuthScreen from './src/screens/Auth/Auth';
 import SharePlaceScreen from './src/screens/SharePlace/SharePlace';
 import FindPlaceScreen from './src/screens/FindPlace/FindPlace';
 import PlaceDetailScreen from './src/screens/PlaceDetail/PlaceDetail';
+import SideDrawerScreen from './src/screens/SideDrawer/SideDrawer';
 import configureStore from './src/store/configureStore';
 const store = configureStore()
 
@@ -93,6 +94,7 @@ Navigation.registerComponent("awesome-reactnative.AuthScreen",()=>AuthScreen, st
 Navigation.registerComponent("awesome-reactnative.SharePlaceScreen",()=>SharePlaceScreen, store, Provider);
 Navigation.registerComponent("awesome-reactnative.FindPlaceScreen",()=>FindPlaceScreen, store, Provider);
 Navigation.registerComponent("awesome-reactnative.PlaceDetailScreen",()=>PlaceDetailScreen, store, Provider);
+Navigation.registerComponent("awesome-reactnative.SideDrawerScreen",()=>SideDrawerScreen);
 
 
 
