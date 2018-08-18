@@ -17,6 +17,10 @@ import PickLocation from '../../components/PickLocation/PickLocation';
 import HeadingText from "../../components/UI/HeadingText/HeadingText";
 
 class SharePlaceScreen extends Component {
+  static navigatorStyle = {
+    navBarButtonColor: '#ff9900',
+  };
+
   state = {
     text:""
   };
