@@ -49,7 +49,7 @@ class AuthScreen extends Component {
     return (<ImageBackground source={backgroundImage} style={styles.backgroundStyle}>
       <View style={styles.container}>
         {headingText}
-        <ButtonWithBackground color="#29aaf4">Switch to Login</ButtonWithBackground>
+        <ButtonWithBackground color="orange">Switch to Login</ButtonWithBackground>
         <View style={styles.inputContainer}>
           <DefaultInput placeholder="Email Address" style={styles.input}/>
           <View style={viewMode === "portrait"
@@ -67,7 +67,7 @@ class AuthScreen extends Component {
             </View>
           </View>
         </View>
-        <ButtonWithBackground color="#29aaf4" onPress={this.onPressHandler}>Submit</ButtonWithBackground>
+        <ButtonWithBackground color="orange" onPress={this.onPressHandler}>Submit</ButtonWithBackground>
       </View>
     </ImageBackground>)
   }
