@@ -87,7 +87,7 @@ class FindPlaceScreen extends Component {
       content = (<Animated.View style={{
           opacity: this.state.placesAnim
         }}>
-        <PlaceList places={this.props.places} onItemSelected={this.itemSelectedHandler}/>
+        <PlaceList places={this.props.places} onItemSelected={this.selectHandler}/>
       </Animated.View>)
     }
     return (<View style={this.state.dataLoaded
