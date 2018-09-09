@@ -6,7 +6,8 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
-  Image
+  Image,
+  KeyboardAvoidingView
 } from 'react-native';
 import {connect} from 'react-redux';
 import {addPlace} from '../../store/actions';
@@ -15,6 +16,7 @@ import MainText from '../../components/UI/MainText/MainText';
 import PickImage from '../../components/PickImage/PickImage';
 import PickLocation from '../../components/PickLocation/PickLocation';
 import HeadingText from "../../components/UI/HeadingText/HeadingText";
+import {validate} from '../../utility/validations';
 
 class SharePlaceScreen extends Component {
   static navigatorStyle = {
@@ -22,7 +24,16 @@ class SharePlaceScreen extends Component {
   };
 
   state = {
-    text:""
+    controls:{
+      placeName:{
+        value:"",
+        valid:false,
+        touched:false,
+        validationRules:{
+          notEmpty:true
+        }
+      }
+    }
   };
   constructor(props) {
     super(props);
@@ -34,37 +45,59 @@ class SharePlaceScreen extends Component {
       this.props.navigator.toggleDrawer({side: "left"});
     }
   }
-  _onChangeText = (val) =>{
-    this.setState({
-      text:val
+  _onChangeText = (value) =>{
+    this.setState(prevState=>{
+      return{
+        controls:{
+          ...prevState.controls,
+          placeName:{
+            ...prevState.controls.placeName,
+            value,
+            valid:validate(value, prevState.controls.placeName.validationRules),
+            touched:true
+          }
+        }
+      }
     })
   }
 
   _onPress = () => {
-    const {text} = this.state
-    if (text.trim() === "") {
+    const {controls:{placeName:{value}}} = this.state
+    if (value.trim() === "") {
       return
     }
     this.setState(prevState=>{
-    return {text:""}
+      return{
+        controls:{
+          ...prevState.controls,
+          placeName:{
+            ...prevState.controls.placeName,
+            value:"",
+            touched:false,
+            valid:false
+          }
+        }
+      }
     })
-    this.props.onAddPlace(text);
+    this.props.onAddPlace(value);
   }
 
   render() {
-    return (<ScrollView>
-      <View style={styles.container}>
+    return (
+      <KeyboardAvoidingView keyboardVerticalOffset={100} style={styles.container} behavior={"padding"}>
+        <ScrollView>
         <MainText>
           <HeadingText>Share a place with us!</HeadingText>
         </MainText>
         <PickImage/>
         <PickLocation/>
-        <PlaceInput placeName={this.state.text} onChangeText={this._onChangeText}/>
+        <PlaceInput placeData={this.state.controls.placeName} onChangeText={this._onChangeText}/>
         <View style={styles.buttonContainer}>
-          <Button title="Share the Place!" onPress={this._onPress}/>
+          <Button disabled={!this.state.controls.placeName.valid} title="Share the Place!" onPress={this._onPress}/>
         </View>
-      </View>
-    </ScrollView>)
+        </ScrollView>
+      </KeyboardAvoidingView>
+    )
   }
 }
 const styles = StyleSheet.create({

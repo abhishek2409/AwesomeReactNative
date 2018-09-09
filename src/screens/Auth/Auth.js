@@ -6,7 +6,10 @@ import {
   TextInput,
   StyleSheet,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
 } from 'react-native';
 import startTabs from '../MainTabs/startMainTabs';
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
@@ -138,25 +141,26 @@ class AuthScreen extends Component {
       </MainText>)
     }
     return (<ImageBackground source={backgroundImage} style={styles.backgroundStyle}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior={"padding"}>
         {headingText}
         <ButtonWithBackground color="orange" onPress={this.switchAuthMode}>Switch to {
             authMode === "login"
               ? "Signup"
               : "Login"
           }</ButtonWithBackground>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inputContainer}>
           <DefaultInput autoCapitalize={"none"} autoCorrect={false} keyboardType={"email-address"} placeholder="Email Address" touched={this.state.controls.email.touched} valid={this.state.controls.email.valid} style={styles.input} value={this.state.controls.email.value} onChangeText={(val) => this.updateInputState("email", val)}/>
-          <View style={viewMode === "portrait" || authMode === "signup"
+          <View style={viewMode === "portrait" || authMode === "login"
               ? styles.passwordContainerPortrait
               : styles.passwordContainerLandscape}>
-            <View style={viewMode === "portrait" || authMode === "signup"
+            <View style={viewMode === "portrait" || authMode === "login"
                 ? styles.passwordWrapperPortrait
                 : styles.passwordWrapperLandscape}>
               <DefaultInput secureTextEntry={true} placeholder="Password" touched={this.state.controls.password.touched} valid={this.state.controls.password.valid} style={styles.input} value={this.state.controls.password.value} onChangeText={(val) => this.updateInputState("password", val)}/>
             </View>
             {
-              authMode === "login"
+              authMode === "signup"
                 ? (<View style={viewMode === "portrait"
                     ? styles.passwordWrapperPortrait
                     : styles.passwordWrapperLandscape}>
@@ -166,8 +170,11 @@ class AuthScreen extends Component {
             }
           </View>
         </View>
-        <ButtonWithBackground disabled={(!this.state.controls.confirmPassword.valid && authMode === "signup") || !this.state.controls.password.valid || !this.state.controls.email.valid} color="orange" onPress={this.onPressHandler}>Submit</ButtonWithBackground>
-      </View>
+        </TouchableWithoutFeedback>
+        <ButtonWithBackground disabled={
+            (!this.state.controls.confirmPassword.valid && authMode === "signup") || (!this.state.controls.password.valid) || (!this.state.controls.email.valid)
+          } color="orange" onPress={this.onPressHandler}>Submit</ButtonWithBackground>
+      </KeyboardAvoidingView>
     </ImageBackground>)
   }
 }
